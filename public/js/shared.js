@@ -31,10 +31,11 @@ function loadOrderSummary() {
 
     let summaryHTML = '';
     cart.forEach((item, index) => {
+        const price = item.price ? item.price.toFixed(2) : "0.00"; // Fallback for missing price
         summaryHTML += `
             <div class="order-summary-item">
                 <strong>${item.productName}</strong> (Product Number: ${item.productNumber})<br>
-                Price: $${item.price.toFixed(2)}<br>
+                Price: $${price}<br>
                 <em>Customizations:</em> ${Object.entries(item)
                     .filter(([key]) => !['productName', 'productNumber', 'price'].includes(key))
                     .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
@@ -137,7 +138,6 @@ async function handleCheckout() {
     // Save download links to localStorage
     localStorage.setItem('downloadLinks', JSON.stringify(downloadLinks));
 
-   
     // Clear the cart
     clearCart();
 
@@ -166,7 +166,7 @@ function loadConfirmationPage() {
     localStorage.removeItem('downloadLinks');
 }
 
-// Initialize shared.js functionality
+// Attach event handlers and initialize shared functionality
 document.addEventListener("DOMContentLoaded", () => {
     console.log("shared.js loaded. Initializing cart...");
     initializeCart();
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 productName: "Cookbook",
                 productNumber: 101,
                 price: 9.99, // Hardcoded price
-                customizations: getCookbookCustomizations()
+                customizations: getCookbookCustomizations(),
             };
 
             addToCart(item);
@@ -251,10 +251,11 @@ function loadCart() {
 
     let cartHTML = '';
     cart.forEach((item, index) => {
+        const price = item.price ? item.price.toFixed(2) : "0.00"; // Fallback for missing price
         cartHTML += `
             <div class="cart-item">
                 <strong>${item.productName}</strong> (Product Number: ${item.productNumber})<br>
-                Price: $${item.price.toFixed(2)}<br>
+                Price: $${price}<br>
                 <em>Customizations:</em> ${Object.entries(item)
                     .filter(([key]) => !['productName', 'productNumber', 'price'].includes(key))
                     .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
