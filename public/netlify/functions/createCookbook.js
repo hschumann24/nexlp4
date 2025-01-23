@@ -12,6 +12,23 @@ const s3 = new AWS.S3({
 // OpenAI API key
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
+console.log("About to call fetch for OpenAI API");
+const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'system', content: 'You are a professional chef.' }, { role: 'user', content: prompt }],
+        max_tokens: 1500,
+    }),
+});
+console.log("Fetch call completed");
+
+
+
 exports.handler = async (event, context) => {
     try {
         console.log("Starting cookbook generation...");
