@@ -1,6 +1,18 @@
 // Ensure the cart exists in localStorage
 function initializeCart() {
-    if (!localStorage.getItem("cart")) {
+    console.log("initializeCart called");
+    try {
+        // Check if cart exists and is valid JSON
+        const cart = localStorage.getItem("cart");
+        if (!cart || !JSON.parse(cart)) {
+            console.log("Cart not found or invalid. Initializing...");
+            localStorage.setItem("cart", JSON.stringify([]));
+        } else {
+            console.log("Cart already exists:", JSON.parse(cart));
+        }
+    } catch (error) {
+        console.error("Error initializing cart:", error);
+        // Clear and reinitialize the cart if corrupted
         localStorage.setItem("cart", JSON.stringify([]));
     }
 }
