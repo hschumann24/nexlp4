@@ -2,9 +2,6 @@
   publish = "public"
   functions = "netlify/functions"
 
-[functions]
-  directory = "netlify/functions"
-
 [functions.runtime]
   type = "python"
   external_python_modules = ["boto3", "fpdf"]
