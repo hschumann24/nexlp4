@@ -70,8 +70,7 @@ function removeFromCart(index) {
         localStorage.setItem("cart", JSON.stringify(cart));
         console.log("Item removed. Updated cart:", cart);
 
-        const orderSummary = document.getElementById("order-summary");
-        if (orderSummary) loadOrderSummary();
+        loadOrderSummary(); // Refresh the order summary
     } else {
         console.error("Invalid index:", index);
     }
@@ -98,6 +97,11 @@ async function handleCheckout() {
     console.log("handleCheckout called");
 
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cart.length === 0) {
+        alert("Your cart is empty. Please add items before checking out.");
+        return;
+    }
+
     const groupedProducts = {};
     const downloadLinks = [];
 
@@ -135,6 +139,11 @@ async function handleCheckout() {
         }
     }
 
+    if (downloadLinks.length === 0) {
+        alert("Failed to generate any downloadable files. Please try again.");
+        return;
+    }
+
     // Save download links to localStorage
     localStorage.setItem('downloadLinks', JSON.stringify(downloadLinks));
 
@@ -152,6 +161,11 @@ function loadConfirmationPage() {
     const downloadLinks = JSON.parse(localStorage.getItem('downloadLinks')) || [];
     const resultDiv = document.getElementById('result');
 
+    if (!resultDiv) {
+        console.error("Result div not found on confirmation page.");
+        return;
+    }
+
     if (downloadLinks.length === 0) {
         resultDiv.innerHTML = "<p>No download links available. Please contact support.</p>";
         return;
@@ -162,7 +176,7 @@ function loadConfirmationPage() {
         .join('');
     resultDiv.innerHTML = linksHTML;
 
-    // Optionally clear the stored links after displaying them
+    // Clear the stored links after displaying them
     localStorage.removeItem('downloadLinks');
 }
 
@@ -171,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("shared.js loaded. Initializing cart...");
     initializeCart();
 
-    // If the page contains an order summary, load it
+    // Load the order summary on the checkout page
     const orderSummary = document.getElementById("order-summary");
     if (orderSummary) loadOrderSummary();
 
@@ -272,3 +286,4 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("cart.html loaded. Loading cart...");
     loadCart();
 });
+
