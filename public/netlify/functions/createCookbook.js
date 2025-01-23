@@ -1,3 +1,9 @@
+// Explicitly check for any accidental use of `fetch2`
+if (typeof fetch2 !== "undefined") {
+    console.error("fetch2 is defined but should not be used. Aborting...");
+    throw new Error("fetch2 is not allowed and must not be used.");
+}
+
 const { PDFDocument, rgb } = require('pdf-lib'); // For PDF generation
 const fetch = require('node-fetch'); // Correctly importing fetch
 const AWS = require('aws-sdk'); // AWS SDK for S3 storage
