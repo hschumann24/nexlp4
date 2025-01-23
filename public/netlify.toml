@@ -2,13 +2,9 @@
   publish = "public"
   functions = "netlify/functions"
 
-[functions]
+[functions."createCookbook"]
+  runtime = "python"
   external_python_modules = [
     "boto3",
     "fpdf"
   ]
-
-# Optional: Add specific configuration for your function
-[functions."createCookbook.py"]
-  memory = 128
-  timeout = 10
