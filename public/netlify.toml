@@ -1,5 +1,8 @@
-[build]
-publish = ""
-functions = "netlify/functions"
 [functions]
-runtime = "python"
+directory = "netlify/functions"
+
+[functions.runtime]
+  external_python_modules = [
+    "boto3",
+    "fpdf"
+  ]
