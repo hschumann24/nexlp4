@@ -1,3 +1,23 @@
-[functions.runtime]
-  type = "python"
+[build]
+  publish = "public"
+  functions = "netlify/functions"  # Ensure the functions directory is set correctly
+
+[functions]
+  # Explicitly set the runtime to Python
+  runtime = "python"
+
+  # Explicitly include the function file `createCookbook`
+  included_files = [
+    "netlify/functions/createCookbook.py"
+  ]
+
+  # Specify external Python modules if any are required
   external_python_modules = ["boto3", "fpdf"]
+
+  # Optional: Increase timeout or memory limits if necessary
+  node_bundler = "none"  # Since it's Python, ensure Node.js bundling is not interfering
+
+[functions.createCookbook]
+  # This section is optional but ensures specific settings for your function
+  memory = 128  # Adjust memory allocation if necessary
+  timeout = 10  # Set timeout in seconds
