@@ -1,9 +1,11 @@
 {
-  "name": "narra-loom",
+  "name": "functions",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "createCookbook.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "pdf-lib": "^1.17.1"
-    "node-sass": "^7.0.1"
   }
 }
