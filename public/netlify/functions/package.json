@@ -1,0 +1,9 @@
+{
+  "name": "narra-loom",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+    "node-sass": "^7.0.1"
+  }
+}
