@@ -1,11 +1,11 @@
 const { PDFDocument, rgb } = require('pdf-lib'); // For PDF generation
-const fetch = require('node-fetch'); // For making API calls
+const fetch = require('node-fetch'); // Correctly importing fetch
 const AWS = require('aws-sdk'); // AWS SDK for S3 storage
 
 // Configure AWS S3
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEYS_ID, // Set in environment variables
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY, // Set in environment variables
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEYS, // Set in environment variables
     region: 'us-east-1', // Replace with your bucket's region
 });
 
