@@ -4,19 +4,18 @@ const AWS = require('aws-sdk'); // AWS SDK for S3 storage
 
 // Configure AWS S3
 const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEYS_ID, // Set in environment variables
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEYS, // Set in environment variables
-    region: 'us-east-1', // Replace with your bucket's region
+    accessKeyId: process.env.AWS_ACCESS_KEYS_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEYS,
+    region: 'us-east-1',
 });
 
-// OpenAI API key (set this as an environment variable)
+// OpenAI API key
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 exports.handler = async (event, context) => {
     try {
         console.log("Starting cookbook generation...");
 
-        // Ensure the request is a POST
         if (event.httpMethod !== 'POST') {
             return {
                 statusCode: 405,
@@ -24,10 +23,7 @@ exports.handler = async (event, context) => {
             };
         }
 
-        // Parse the request body
         const { items } = JSON.parse(event.body);
-        console.log("Parsed items:", items);
-
         if (!items || items.length === 0) {
             return {
                 statusCode: 400,
@@ -35,24 +31,9 @@ exports.handler = async (event, context) => {
             };
         }
 
-        // Create a prompt for ChatGPT
-        const prompt = `You are a professional chef creating personalized cookbooks. Generate a detailed cookbook based on the following details. Include recipes categorized by meal types (e.g., Breakfast, Lunch, Dinner, Dessert) and ensure the cookbook has a professional format:
-${items.map((item, index) => {
-    return `
-#${index + 1}
-Favorite Cuisines: ${item.favoriteCuisines || 'None'}
-Dietary Restrictions: ${item.dietaryRestrictions ? item.dietaryRestrictions.join(', ') : 'None'}
-Disliked Foods: ${item.dislikedFoods || 'None'}
-Cooking Skill Level: ${item.cookingSkill || 'None'}
-Favorite Fruits: ${item.favoriteFruits ? item.favoriteFruits.join(', ') : 'None'}
-Favorite Meats: ${item.favoriteMeats ? item.favoriteMeats.join(', ') : 'None'}
-Favorite Spices: ${item.favoriteSpices ? item.favoriteSpices.join(', ') : 'None'}
-`;
-}).join('\n')}`;
-
+        const prompt = `You are a professional chef...`; // Use your full prompt here
         console.log("Generated prompt for OpenAI:", prompt);
 
-        // Call the OpenAI API
         const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -66,60 +47,36 @@ Favorite Spices: ${item.favoriteSpices ? item.favoriteSpices.join(', ') : 'None'
             }),
         });
 
-        const openAIResult = await openAIResponse.json();
-        console.log("OpenAI API response:", openAIResult);
-
         if (!openAIResponse.ok) {
-            throw new Error(`OpenAI API error: ${openAIResult.error.message}`);
+            throw new Error(`OpenAI API error: ${await openAIResponse.text()}`);
         }
 
+        const openAIResult = await openAIResponse.json();
         const generatedContent = openAIResult.choices[0].message.content.trim();
-        console.log("Generated content from OpenAI:", generatedContent);
+        if (!generatedContent) throw new Error("OpenAI generated content is empty");
 
-        // Create a new PDF
         const pdfDoc = await PDFDocument.create();
-        let page = pdfDoc.addPage([600, 800]); // Change const to let
+        let page = pdfDoc.addPage([600, 800]);
         const { width, height } = page.getSize();
-
-        // Add content to the PDF
         let y = height - 50;
-        page.drawText('Personalized Cookbook', {
-            x: 50,
-            y,
-            size: 24,
-            color: rgb(0, 0, 0),
-        });
-
+        page.drawText('Personalized Cookbook', { x: 50, y, size: 24, color: rgb(0, 0, 0) });
         y -= 40;
         const lines = generatedContent.split('\n');
         lines.forEach((line) => {
             if (y < 50) {
-                // Create a new page and reset y-coordinate
-                page = pdfDoc.addPage([600, 800]); // Reassign page for the new page
+                page = pdfDoc.addPage([600, 800]);
                 y = height - 50;
             }
-            page.drawText(line, {
-                x: 50,
-                y,
-                size: 12,
-                color: rgb(0, 0, 0),
-            });
+            page.drawText(line, { x: 50, y, size: 12, color: rgb(0, 0, 0) });
             y -= 20;
         });
 
-        // Save the PDF to a buffer
         const pdfBytes = await pdfDoc.save();
+        if (!pdfBytes) throw new Error("PDF generation failed");
 
-        if (!pdfBytes || pdfBytes.length === 0) {
-            throw new Error("PDF generation failed. Buffer is empty.");
-        }
-
-        console.log("PDF generated successfully. Uploading to S3...");
-
-        // Upload the PDF to S3
         const fileName = `cookbook-${Date.now()}.pdf`;
         const s3Params = {
-            Bucket: 'naraloom-project-2023-example.0002', // Replace with your S3 bucket name
+            Bucket: 'naraloom-project-2023-example.0002',
             Key: fileName,
             Body: Buffer.from(pdfBytes),
             ContentType: 'application/pdf',
@@ -127,9 +84,6 @@ Favorite Spices: ${item.favoriteSpices ? item.favoriteSpices.join(', ') : 'None'
         };
 
         const s3Result = await s3.upload(s3Params).promise();
-        console.log("S3 upload successful:", s3Result);
-
-        // Respond with the S3 link
         return {
             statusCode: 200,
             body: JSON.stringify({
@@ -138,11 +92,7 @@ Favorite Spices: ${item.favoriteSpices ? item.favoriteSpices.join(', ') : 'None'
             }),
         };
     } catch (error) {
-        console.error('Error generating cookbook:', {
-            message: error.message,
-            stack: error.stack,
-            name: error.name,
-        });
+        console.error('Error generating cookbook:', error);
         return {
             statusCode: 500,
             body: JSON.stringify({ error: 'Failed to generate cookbook', details: error.message }),
