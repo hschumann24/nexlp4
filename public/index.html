@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaraLoom</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Page-specific styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('images/background1.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cookbook-logo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .cookbook-details p {
+            margin: 10px 0;
+        }
+
+        .cart-button-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+        h2 {
+    color: black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Persistent Cart Button -->
+    <div class="cart-button-container">
+        <a href="cart.html" class="cart-button">
+            <img src="images/carticon.png" alt="Cart Icon" width="30" height="30">
+            <span class="cart-count">0</span>
+        </a>
+    </div>
+
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="cookbook-logo-box">
+                <h1><img src="images/logoz.png" width="150" height="150" alt="NaraLoom Logo"></h1>
+                <h2>Our Unique Product: Personalized Cookbook</h2>
+                <div class="cookbook-content">
+                    <div class="cookbook-image">
+                        <img src="images/cookbook.webp" alt="Personalized Cookbook" height="300" width="300">
+                    </div>
+                    <div class="cookbook-details">
+                        <h3>Personalized Cookbook</h3>
+                        <p>
+                            Tailor-made just for you, this cookbook includes recipes based on your tastes, dietary preferences, and more.
+                            It's a perfect companion for anyone who loves personalized culinary experiences!
+                        </p>
+                        <a href="cookbook.html" class="customize-button">Customize</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Storybook Section -->
+    <section class="storybook-section box-container">
+        <h2>Our Storybooks</h2>
+        <div class="book-options">
+            <div class="book">
+                <h3>The Magical Adventure</h3>
+                <img src="images/bk1/b1cp.webp" alt="">
+                <p>A thrilling journey through enchanted forests and magical lands.</p>
+                <a href="book1.html" class="customize-button">Customize</a>
+
+            </div>
+
+            <div class="book">
+                <h3>An Exciting Adventure</h3>
+                <img src="images/bk2/b2cp.webp" alt="">
+                <p>An exciting adventure through the starry cosmos.</p>
+                <a href="book2.html" class="customize-button">Customize</a>
+
+            </div>
+
+            <div class="book">
+                <h3>A Heartwarming Tale</h3>
+                <img src="images/bk2/b2cp.webp" alt="">
+                <p>A heartwarming tale of friendship and discovery.</p>
+                <a href="book3.html" class="customize-button">Customize</a>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="js/shared.js"></script>
+</body>
+</html>
