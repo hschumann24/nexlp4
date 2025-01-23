@@ -71,34 +71,35 @@ Favorite Spices: ${item.favoriteSpices ? item.favoriteSpices.join(', ') : 'None'
         const generatedContent = openAIResult.choices[0].message.content.trim();
 
         // Create a new PDF
-        const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([600, 800]);
-        const { width, height } = page.getSize();
+const pdfDoc = await PDFDocument.create();
+let page = pdfDoc.addPage([600, 800]); // Change const to let
+const { width, height } = page.getSize();
 
-        // Add content to the PDF
-        let y = height - 50;
-        page.drawText('Personalized Cookbook', {
-            x: 50,
-            y,
-            size: 24,
-            color: rgb(0, 0, 0),
-        });
+// Add content to the PDF
+let y = height - 50;
+page.drawText('Personalized Cookbook', {
+    x: 50,
+    y,
+    size: 24,
+    color: rgb(0, 0, 0),
+});
 
-        y -= 40;
-        const lines = generatedContent.split('\n');
-        lines.forEach((line) => {
-            if (y < 50) {
-                page = pdfDoc.addPage([600, 800]);
-                y = height - 50;
-            }
-            page.drawText(line, {
-                x: 50,
-                y,
-                size: 12,
-                color: rgb(0, 0, 0),
-            });
-            y -= 20;
-        });
+y -= 40;
+const lines = generatedContent.split('\n');
+lines.forEach((line) => {
+    if (y < 50) {
+        // Create a new page and reset y-coordinate
+        page = pdfDoc.addPage([600, 800]); // Reassign page for the new page
+        y = height - 50;
+    }
+    page.drawText(line, {
+        x: 50,
+        y,
+        size: 12,
+        color: rgb(0, 0, 0),
+    });
+    y -= 20;
+});
 
         // Save the PDF to a buffer
         const pdfBytes = await pdfDoc.save();
