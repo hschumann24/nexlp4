@@ -1,9 +1,19 @@
 {
-  "name": "narra-loom",
+  "name": "my-netlify-functions",
   "version": "1.0.0",
+  "description": "Netlify functions for my project",
   "main": "index.js",
   "dependencies": {
-    "pdf-lib": "^1.17.1"
+    "aws-sdk": "^2.1042.0",
+    "pdf-lib": "^1.17.1",
+    "node-fetch": "^3.2.10"
+  },
+  "devDependencies": {
     "node-sass": "^7.0.1"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
