@@ -2,4 +2,4 @@
 directory = "netlify/functions"
 
 [functions]
-runtime = "python"
+external_python_modules = ["boto3", "fpdf"]
