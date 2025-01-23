@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/createCookbook.py": {
+      "runtime": "vercel-python@latest"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/createCookbook",
+      "dest": "api/createCookbook.py"
+    }
+  ]
+}
