@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Book - NaraLoom</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- External CSS -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('images/background1.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #000; /* Default text color set to black */
+        }
+    </style>
+</head>
+<body>
+    <!-- Persistent Cart Button -->
+    <div class="cart-button-container">
+        <a href="cart.html" class="cart-button">
+            <img src="images/carticon.png" alt="Cart Icon">
+            <span class="cart-count">0</span>
+        </a>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content box-container">
+            <!-- Existing Section -->
+            <div class="book-options">
+                <div class="book">
+                    <h3>The Magical Adventure</h3>
+                    <p>A thrilling journey through enchanted forests and magical lands.</p>
+                </div>
+            </div>
+
+            <!-- Main Book Image and Thumbnails -->
+            <div class="main-book-image">
+                <img id="mainImage" src="images/b1cp.webp" alt="Main Book">
+            </div>
+            <div class="thumbnails">
+                <img src="images/b1cp.webp" alt="Preview Cover" onclick="changeImage('images/b1cp.webp')">
+                <img src="images/b1p1.webp" alt="Preview 1" onclick="changeImage('images/b1p1.webp')">
+                <img src="images/b1p2.webp" alt="Preview 2" onclick="changeImage('images/b1p2.webp')">
+                <img src="images/b1p3.webp" alt="Preview 3" onclick="changeImage('images/b1p3.webp')">
+                <img src="images/b1p4.webp" alt="Preview 4" onclick="changeImage('images/b1p4.webp')">
+                <img src="images/b1p5.webp" alt="Preview 5" onclick="changeImage('images/b1p5.webp')">
+                <img src="images/b1p6.webp" alt="Preview 6" onclick="changeImage('images/b1p6.webp')">
+            </div>
+
+            <div class="book-preview">
+                <h2>Customize Your Book</h2>
+                <p>Fill in the details below to make your book truly unique!</p>
+            </div>
+            <div class="price-section">
+                <h3>Price: $19.99</h3>
+            </div>
+            <div class="customization-container">
+                <!-- Customization Form -->
+                <form class="customization-form" id="customizationForm">
+                    <label for="child-name">Child's Name:</label>
+                    <input type="text" id="child-name" name="child-name" placeholder="Enter child's name" required>
+
+                    <label for="age">Child's Age:</label>
+                    <input type="number" id="age" name="age" placeholder="Enter child's age" min="1" max="12" required>
+
+                    <label for="favorite-color">Favorite Color:</label>
+                    <input type="text" id="favorite-color" name="favorite-color" placeholder="Enter child's favorite color" required>
+
+                    <label for="favorite-animal">Favorite Animal:</label>
+                    <input type="text" id="favorite-animal" name="favorite-animal" placeholder="Enter child's favorite animal" required>
+
+                    <label for="sidekick-name">Sidekick's Name:</label>
+                    <input type="text" id="sidekick-name" name="sidekick-name" placeholder="Enter a sidekick's name" required>
+                </form>
+
+                <!-- Additional Info Section -->
+                <div class="additional-info">
+                    <!-- Product Description -->
+                    <div class="product-description">
+                        <h3>Why You'll Love This Book</h3>
+                        <p>This magical adventure is designed to spark your child's imagination, promote values like bravery and kindness, and create a personalized keepsake they’ll treasure forever.</p>
+                    </div>
+
+                    <!-- Reviews -->
+                    <div class="reviews">
+                        <h3>What Customers Are Saying</h3>
+                        <ul>
+                            <li>?????????? "My child was thrilled! The personalized story made it so special." - Sarah T.</li>
+                            <li>?????????? "A beautiful keepsake we’ll cherish for years." - Emily K.</li>
+                            <li>?????????? "It’s so unique and thoughtful. Highly recommend!" - Jason P.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Centered Button -->
+            <div class="cta-button">
+                <button class="customize-button" onclick="addToCart({
+                    id: 'magical_adventure',
+                    name: 'Magical Adventure',
+                    price: 19.99,
+                    quantity: 1,
+                    customization: {
+                        childName: document.getElementById('child-name').value,
+                        age: document.getElementById('age').value,
+                        favoriteColor: document.getElementById('favorite-color').value,
+                        favoriteAnimal: document.getElementById('favorite-animal').value,
+                        sidekickName: document.getElementById('sidekick-name').value
+                    }
+                })">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shared JavaScript -->
+    <script src="js/shared.js"></script>
+    <script>
+        // Change main image dynamically
+        function changeImage(imageSrc) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = imageSrc;
+        }
+    </script>
+</body>
+</html>

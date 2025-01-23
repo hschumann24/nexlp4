@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - NaraLoom</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Your Shopping Cart</h1>
+    </header>
+
+    <!-- Cart Section -->
+    <section class="cart-container">
+        <div id="empty-cart-message" style="display: none;">
+            <p>Your cart is empty. <a href="index.html">Continue Shopping</a></p>
+        </div>
+        <div id="cart-items">
+            <!-- Items will be dynamically loaded here -->
+        </div>
+        <div class="cart-summary" style="display: none;">
+            <h3>Total: $<span id="cart-total">0.00</span></h3>
+            <button class="checkout-button" id="checkout-button">Proceed to Checkout</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 NaraLoom. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/shared.js"></script>
+    <script>
+        // Load cart and add checkout functionality
+        document.addEventListener("DOMContentLoaded", () => {
+            // Load cart items from shared.js
+            loadCart();
+
+            // Handle "Proceed to Checkout" button click
+            const checkoutButton = document.getElementById("checkout-button");
+            if (checkoutButton) {
+                checkoutButton.addEventListener("click", () => {
+                    window.location.href = "checkout.html"; // Redirect to checkout
+                });
+            }
+        });
+
+        // Function to dynamically load cart
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartItemsContainer = document.getElementById("cart-items");
+            const cartTotalElement = document.getElementById("cart-total");
+            const emptyCartMessage = document.getElementById("empty-cart-message");
+            const cartSummary = document.querySelector(".cart-summary");
+
+            cartItemsContainer.innerHTML = ""; // Clear previous content
+            let total = 0;
+
+            if (cart.length === 0) {
+                // Show empty cart message
+                emptyCartMessage.style.display = "block";
+                cartSummary.style.display = "none";
+            } else {
+                // Hide empty cart message
+                emptyCartMessage.style.display = "none";
+                cartSummary.style.display = "block";
+
+                // Render each cart item
+                cart.forEach((item, index) => {
+                    const itemHTML = `
+                        <div class="cart-item">
+                            <h3>${item.name}</h3>
+                            <p>Price: $${item.price.toFixed(2)}</p>
+                            <p>Quantity: ${item.quantity}</p>
+                            <button class="remove-button" onclick="removeItem(${index})">Remove</button>
+                        </div>
+                    `;
+                    cartItemsContainer.insertAdjacentHTML("beforeend", itemHTML);
+
+                    // Update total price
+                    total += item.price * item.quantity;
+                });
+
+                // Update total price in the cart summary
+                cartTotalElement.textContent = total.toFixed(2);
+            }
+        }
+
+        // Function to remove an item from the cart
+        function removeItem(index) {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1); // Remove the item at the specified index
+            localStorage.setItem("cart", JSON.stringify(cart)); // Save updated cart
+            loadCart(); // Re-render the cart
+        }
+    </script>
+</body>
+</html>

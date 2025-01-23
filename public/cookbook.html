@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Cookbook - NaraLoom</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('images/background1.png') no-repeat center center fixed;
+            background-size: cover;
+            color: black;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding-top: 20px;
+        }
+
+        .cookbook-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            text-align: left;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: start;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(145deg, #81ecec, #55efc4);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #74b9ff, #a29bfe);
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="cookbook-box">
+                <h1><img src="images/logoz.png" width="150" height="150" alt="NaraLoom Logo"></h1>
+                <h2>Personalize Your Cookbook</h2>
+                <p>Fill in your preferences below to create a cookbook tailored to your tastes and dietary needs.</p>
+
+                <form id="customization-form">
+                    <!-- Favorite Cuisines -->
+                    <label for="favoriteCuisines">Favorite Cuisines:</label>
+                    <input type="text" id="favoriteCuisines" name="favoriteCuisines" placeholder="E.g., Italian, Indian">
+
+                    <!-- Dietary Restrictions -->
+                    <label>Dietary Restrictions:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="dietaryRestrictions" value="Vegan"> Vegan</label>
+                        <label><input type="checkbox" name="dietaryRestrictions" value="Vegetarian"> Vegetarian</label>
+                        <label><input type="checkbox" name="dietaryRestrictions" value="Gluten-Free"> Gluten-Free</label>
+                        <label><input type="checkbox" name="dietaryRestrictions" value="Nut-Free"> Nut-Free</label>
+                    </div>
+                    <input type="text" id="additionalDietaryNotes" name="additionalDietaryNotes" placeholder="Other restrictions (optional)">
+
+                    <!-- Disliked Foods -->
+                    <label for="dislikedFoods">Disliked Foods:</label>
+                    <input type="text" id="dislikedFoods" name="dislikedFoods" placeholder="E.g., Mushrooms, Onions">
+
+                    <!-- Cooking Skill -->
+                    <label for="cookingSkill">Your Cooking Skill Level:</label>
+                    <select id="cookingSkill" name="cookingSkill">
+                        <option value="">Select...</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+
+                    <!-- Favorite Fruits -->
+                    <label>Favorite Fruits:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="favoriteFruits" value="Apple"> Apple</label>
+                        <label><input type="checkbox" name="favoriteFruits" value="Banana"> Banana</label>
+                        <label><input type="checkbox" name="favoriteFruits" value="Mango"> Mango</label>
+                        <label><input type="checkbox" name="favoriteFruits" value="Strawberry"> Strawberry</label>
+                        <label><input type="checkbox" name="favoriteFruits" value="Pineapple"> Pineapple</label>
+                    </div>
+                    <input type="text" id="additionalFruits" name="additionalFruits" placeholder="Other fruits (optional)">
+
+                    <!-- Favorite Meats -->
+                    <label>Favorite Meats:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="favoriteMeats" value="Chicken"> Chicken</label>
+                        <label><input type="checkbox" name="favoriteMeats" value="Beef"> Beef</label>
+                        <label><input type="checkbox" name="favoriteMeats" value="Fish"> Fish</label>
+                        <label><input type="checkbox" name="favoriteMeats" value="Pork"> Pork</label>
+                        <label><input type="checkbox" name="favoriteMeats" value="Turkey"> Turkey</label>
+                    </div>
+                    <input type="text" id="additionalMeats" name="additionalMeats" placeholder="Other meats (optional)">
+
+                    <!-- Favorite Spices -->
+                    <label>Favorite Spices/Herbs:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="favoriteSpices" value="Basil"> Basil</label>
+                        <label><input type="checkbox" name="favoriteSpices" value="Cinnamon"> Cinnamon</label>
+                        <label><input type="checkbox" name="favoriteSpices" value="Garlic"> Garlic</label>
+                        <label><input type="checkbox" name="favoriteSpices" value="Rosemary"> Rosemary</label>
+                        <label><input type="checkbox" name="favoriteSpices" value="Thyme"> Thyme</label>
+                    </div>
+                    <input type="text" id="additionalSpices" name="additionalSpices" placeholder="Other spices/herbs (optional)">
+
+                    <!-- Submit -->
+                    <button type="button" id="submit-button">Save Preferences</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/shared.js"></script>
+</body>
+</html>
